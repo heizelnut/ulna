@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:orientation="horizontal" >
+
+    <ImageView
+        android:id="@+id/webradio_icon"
+        android:padding="15dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:contentDescription="Webradio Logo" />
+    <TextView
+        android:id="@+id/webradio_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:textSize="30dp"
+        android:text="Webradio" />
+</LinearLayout>
