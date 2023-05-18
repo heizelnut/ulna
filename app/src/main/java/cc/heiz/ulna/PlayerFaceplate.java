@@ -22,6 +22,7 @@ public class PlayerFaceplate extends AppCompatActivity {
     TextView title;
     SeekBar volume;
     MediaPlayer mediaPlayer;
+    private final int MAX_VOLUME = 100;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +70,17 @@ public class PlayerFaceplate extends AppCompatActivity {
                 play_pause.setImageResource(R.drawable.play_arrow);
                 CreateNotification.createNotification(PlayerFaceplate.this, to_play, false);
             }
+        });
+        volume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                final float volume = (float) (1 - (Math.log(MAX_VOLUME - progress) / Math.log(MAX_VOLUME)));
+                mediaPlayer.setVolume(volume, volume);
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
         });
     }
 
