@@ -22,6 +22,9 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -44,7 +47,9 @@ public class MainActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putString("personal_code", uuid);
             editor.apply();
+            personal_code = uuid;
         }
+        final String user = personal_code;
         Log.println(Log.INFO, "Personal code", personal_code);
 
         setRadios();
@@ -53,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         webradioList.setOnItemClickListener((parent, view, position, id) -> {
             Intent intent = new Intent(getApplicationContext(), PlayerFaceplate.class);
             intent.putExtra("radio", radios.get(position));
+            intent.putExtra("user", user);
             startActivity(intent);
         });
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

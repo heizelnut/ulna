@@ -23,14 +23,17 @@ public class PlayerFaceplate extends AppCompatActivity {
     SeekBar volume;
     MediaPlayer mediaPlayer;
     private final int MAX_VOLUME = 100;
+    ListeningSession session;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_faceplate);
         Intent intent = getIntent();
-
         WebRadio to_play = (WebRadio) intent.getSerializableExtra("radio");
+        String uuid = intent.getStringExtra("user");
+        session = new ListeningSession(to_play, uuid);
+
         CreateNotification.createNotification(PlayerFaceplate.this, to_play, true);
 
         cover_art = findViewById(R.id.faceplate_image);
@@ -42,7 +45,6 @@ public class PlayerFaceplate extends AppCompatActivity {
         title.setText(to_play.title);
 
         volume = findViewById(R.id.faceplate_volume);
-
 
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setAudioAttributes(
@@ -57,6 +59,7 @@ public class PlayerFaceplate extends AppCompatActivity {
         } catch (IOException e) {
             Toast.makeText(getApplicationContext(), "IO Exception", Toast.LENGTH_LONG).show();
         }
+        session.startSession();
         mediaPlayer.start();
         play_pause.setImageResource(R.drawable.pause);
         play_pause.setOnClickListener(view -> {
@@ -87,6 +90,8 @@ public class PlayerFaceplate extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         mediaPlayer.stop();
+        session.stopSession();
+        session.send(PlayerFaceplate.this);
         mediaPlayer.release();
         CreateNotification.clear(PlayerFaceplate.this);
     }
