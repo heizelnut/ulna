@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,13 +33,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setRadios();
-        btn_play = findViewById(R.id.btn_play);
         webradioList = findViewById(R.id.webradio_list);
         webradioList.setAdapter(new WebRadioItemAdapter(this, radios));
         webradioList.setOnItemClickListener((parent, view, position, id) -> {
-                Intent intent = new Intent(MainActivity.this, PlayerFaceplate.class);
-                intent.putExtra("radio", radios.get(position));
-                MainActivity.this.startActivity(intent);
+            Intent intent = new Intent(getApplicationContext(), PlayerFaceplate.class);
+            intent.putExtra("radio", radios.get(position));
+            startActivity(intent);
         });
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createChannel();

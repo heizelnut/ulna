@@ -2,6 +2,7 @@ package cc.heiz.ulna;
 
 import android.app.Activity;
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -20,8 +21,6 @@ public class CreateNotification {
 
     public static void createNotification(Context ctx, WebRadio radio, boolean is_playing) {
         NotificationManagerCompat manager = NotificationManagerCompat.from(ctx);
-        MediaSessionCompat session = new MediaSessionCompat(ctx, "UlnaSession");
-
         Bitmap bImage = BitmapFactory.decodeResource(ctx.getResources(), radio.image);
 
         notification = new NotificationCompat.Builder(ctx, CHANNEL_ID)
@@ -35,8 +34,9 @@ public class CreateNotification {
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .build();
 
+
         notification.contentIntent = PendingIntent.getActivity(ctx, 0,
-                new Intent(ctx, MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
+                new Intent(ctx, BlankActivity.class).setAction(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER), PendingIntent.FLAG_IMMUTABLE);
 
 
         if (ActivityCompat.checkSelfPermission(ctx, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
@@ -45,5 +45,10 @@ public class CreateNotification {
 
         manager.notify(1, notification);
 
+    }
+
+    public static void clear(Context ctx) {
+        NotificationManagerCompat manager = NotificationManagerCompat.from(ctx);
+        manager.cancelAll();
     }
 }
