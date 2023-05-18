@@ -55,7 +55,7 @@ public class PlayerFaceplate extends AppCompatActivity {
             mediaPlayer.setDataSource(to_play.url);
             mediaPlayer.prepare();
         } catch (IOException e) {
-            Toast.makeText(getApplicationContext(), "IO Exception", Toast.LENGTH_LONG);
+            Toast.makeText(getApplicationContext(), "IO Exception", Toast.LENGTH_LONG).show();
         }
         mediaPlayer.start();
         play_pause.setImageResource(R.drawable.pause);

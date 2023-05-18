@@ -7,7 +7,6 @@ public class WebRadio implements Serializable {
     public String url;
     public int image;
     public WebRadio(String title, String url, int image) {
-        super();
         this.title = title;
         this.url = url;
         this.image = image;
